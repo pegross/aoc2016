@@ -1,33 +1,42 @@
 class Numpad:
     sequence = ""
     numbers = (
-        (1, 2, 3),
-        (4, 5, 6),
-        (7, 8, 9)
+        ('-', '-', '1', '-', '-'),
+        ('-', '2', '3', '4', '-'),
+        ('5', '6', '7', '8', '9'),
+        ('-', 'A', 'B', 'C', '-'),
+        ('-', '-', 'D', '-', '-')
     )
 
-    def __init__(self, x=1, y=1):
+    def __init__(self, x: int = 1, y: int = 1):
         self.x = x
         self.y = y
 
     def up(self):
-        self.y = max(self.y - 1, 0)
+        self.move(self.x, self.y - 1)
 
     def down(self):
-        self.y = min(self.y + 1, 2)
+        self.move(self.x, self.y + 1)
 
     def left(self):
-        self.x = max(self.x - 1, 0)
+        self.move(self.x - 1, self.y)
 
     def right(self):
-        self.x = min(self.x + 1, 2)
+        self.move(self.x + 1, self.y)
+
+    def move(self, x: int, y: int):
+        if y < 0 or x < 0:
+            return
+        if y >= len(self.numbers) or x >= len(self.numbers[y]) or self.numbers[y][x] == '-':
+            return
+        self.x = x
+        self.y = y
 
     def press(self):
         print(self.x, self.y, self.numbers[self.y][self.x])
-
         self.sequence += str(self.numbers[self.y][self.x])
 
-    def get_sequence(self) -> str:
+    def read(self) -> str:
         return self.sequence
 
 
@@ -49,4 +58,4 @@ for sequence in instructions:
             numpad.right()
     numpad.press()
 
-print(numpad.get_sequence())
+print(numpad.read())
