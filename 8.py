@@ -23,9 +23,7 @@ screenWidth = 50
 screen = np.zeros((screenHeight, screenWidth))
 
 with open('input/8') as f:
-    i = 0
     for line in f:
-        print('screen', i + 1, screen)
         tokens = line.rstrip().split(' ')
         if tokens[0] == 'rect':
             size = tokens[1].split('x')
@@ -35,7 +33,4 @@ with open('input/8') as f:
             start = tokens[2].split('=')[1]
             screen = rotate(screen, tokens[2][0], int(start), int(tokens[4]))
 
-        i += 1
-        if i > 15:
-            exit()
-    print(np.count_nonzero(screen == 0))
+    print(np.count_nonzero(screen == 1))
